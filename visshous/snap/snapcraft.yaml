@@ -28,6 +28,7 @@ apps:
     command: bash -c $SNAP/vissh_snap
     daemon: simple
     restart-condition: always
+    restart-delay: 3s
     passthrough:
       daemon-scope: user
 
@@ -35,5 +36,5 @@ parts:
   visshous:
     stage-packages:
       - inotify-tools
-    source: https://github.com/gWOLF3/viSSHous/archive/v0.0.11.tar.gz
+    source: https://github.com/gWOLF3/viSSHous/archive/v0.0.16.tar.gz
     plugin: dump
