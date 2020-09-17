@@ -1,5 +1,5 @@
 name: visshous 
-base: bare 
+base: core18
 version: '0.1' 
 summary: magically transport your vim config to remote servers
 description: |
@@ -10,7 +10,7 @@ confinement: devmode
 
 apps:
   visshous: 
-    command: inotifywait -e modify $HOME/.vimrc; /usr/bin/vissh;
+    command: inotifywait -e modify -e create $HOME/.vimrc; ./vissh;
     daemon: simple
     restart-condition: always
 
