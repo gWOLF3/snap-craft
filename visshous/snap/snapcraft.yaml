@@ -5,20 +5,35 @@ summary: magically transport your vim config to remote servers
 description: |
   ViSSHous is a simple tool which helps you carry your vim profile everywhere across SSH sessions, by embedding your vim configuration within SSH itself. 
 grade: devel 
-confinement: devmode
-  
+confinement: strict
+
+plugs: 
+  vim-files:
+    interface: personal-files
+    read: 
+    - $HOME/.vimrc
+    - $HOME/.vim
+    - $HOME/.ssh/viSSHous
+    write: 
+    - $HOME/.vimrc
+    - $HOME/.vim
+    - $HOME/.bashrc
+    - $HOME/.zshrc
+    - $HOME/.ssh/viSSHous
 
 apps:
   visshous: 
-    command: inotifywait -e modify -e create $HOME/.vimrc; ./vissh;
+    plugs:
+    - vim-files
+    command: bash -c $SNAP/vissh_snap
     daemon: simple
     restart-condition: always
+    passthrough:
+      daemon-scope: user
 
 parts:
   visshous:
     stage-packages:
       - inotify-tools
-    source: https://github.com/gWOLF3/viSSHous/archive/v0.0.3.tar.gz
+    source: https://github.com/gWOLF3/viSSHous/archive/v0.0.11.tar.gz
     plugin: dump
-    organize:
-      vissh: /usr/bin/vissh
